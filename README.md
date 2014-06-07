@@ -1,14 +1,18 @@
 # git-freq
 
-TODO: Write description here
+A Git subcommand to detect frequently changed code in the repository
 
 ## Installation
 
-TODO: Write installation instructions here
+```
+$ cabal install git-freq
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+$ git freq
+```
 
 ## How to run tests
 
