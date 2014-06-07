@@ -1,0 +1,20 @@
+Name:                   git-freq
+Version:                0.0.0
+Author:                 Fujimura Daisuke<me@fujimuradaisuke.com>
+Maintainer:             Fujimura Daisuke<me@fujimuradaisuke.com>
+License:                BSD3
+License-File:           LICENSE
+-- Synopsis:               
+-- Description:            
+Cabal-Version:          >= 1.10
+Build-Type:             Simple
+
+Executable git-freq
+  Main-Is:              Main.hs
+  Default-Language:     Haskell2010
+  GHC-Options:          -Wall
+  Build-Depends:        base >= 4 && < 5
+
+Source-Repository head
+  Type:                 git
+--  Location:             
