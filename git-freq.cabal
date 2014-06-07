@@ -4,9 +4,10 @@ Author:                 Fujimura Daisuke<me@fujimuradaisuke.com>
 Maintainer:             Fujimura Daisuke<me@fujimuradaisuke.com>
 License:                BSD3
 License-File:           LICENSE
--- Synopsis:               
--- Description:            
+Synopsis:               A Git subcommand to detect frequently changed code in the repository
+Description:            A Git subcommand to detect frequently changed code in the repository
 Cabal-Version:          >= 1.10
+Homepage:               https://github.com/fujimura/git-freq
 Build-Type:             Simple
 
 Executable git-freq
@@ -15,11 +16,10 @@ Executable git-freq
   GHC-Options:          -Wall
   Build-Depends:        base >= 4 && < 5
                       , bytestring
-                      , io-streams
                       , text
                       , containers
                       , process
 
 Source-Repository head
   Type:                 git
---  Location:             
+  Location:             git@github.com:fujimura/git-freq.git
