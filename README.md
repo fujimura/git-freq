@@ -4,6 +4,8 @@ A Git subcommand to detect frequently changed code in the repository
 
 ## Installation
 
+Please note: not yet released. Just a future plan.
+
 ```
 $ cabal install git-freq
 ```
