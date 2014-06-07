@@ -1,17 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Git.Freq where
 
-import           Data.Map            (Map)
-import qualified Data.Map            as Map
+import           Data.List       (sortBy)
+import           Data.Map.Strict (Map)
+import qualified Data.Map.Strict as Map
 import           Data.Monoid
-import           Data.Text           (Text)
-import qualified Data.Text           as T
-import qualified Data.Text.IO        as T
+import           Data.Text       (Text)
+import qualified Data.Text       as T
+import qualified Data.Text.IO    as T
 import           System.IO
-import           System.Process      (runInteractiveProcess)
-import           Text.Read
-
-import           Data.List
+import           System.Process  (runInteractiveProcess)
+import           Text.Read       (readMaybe)
 
 type FileName = Text
 type NumStat = (Int, Int)
@@ -54,6 +53,7 @@ render (fileName,(added,deleted)) =
 sortResult :: [Change] -> [Change]
 sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f
 
+-- TODO: This ignores the file which had many changes but deleted.
 ignoreJustAdded :: [Change] -> [Change]
 ignoreJustAdded [] = []
 ignoreJustAdded (x@(_,(a,d)):xs)
