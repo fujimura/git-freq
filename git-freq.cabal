@@ -18,6 +18,7 @@ Executable git-freq
                       , bytestring
                       , text
                       , containers
+                      , optparse-applicative
                       , process
 
 Source-Repository head
