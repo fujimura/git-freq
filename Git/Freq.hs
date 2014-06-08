@@ -8,9 +8,11 @@ import           Data.Monoid
 import           Data.Text       (Text)
 import qualified Data.Text       as T
 import qualified Data.Text.IO    as T
-import           System.IO
 import           System.Process  (runInteractiveProcess)
 import           Text.Read       (readMaybe)
+
+import           Git.Freq.Source (Source)
+import qualified Git.Freq.Source as Source
 
 type FileName = Text
 type NumStat = (Int, Int)
@@ -27,12 +29,12 @@ parseLine = go . T.splitOn (T.pack "\t")
           go _ = Nothing
           readIntMaybe x = readMaybe (T.unpack x) :: Maybe Int
 
-walk :: Handle -> [Change] -> IO [Change]
+walk :: Source a => a -> [Change] -> IO [Change]
 walk h changes = do
-    eof <- hIsEOF h
+    eof <- Source.isEOF h
     if eof then return changes
            else do
-             l <- T.hGetLine h
+             l <- Source.getLine h
              case parseLine l of
                Just c  -> walk h (c:changes)
                Nothing -> walk h changes
@@ -63,9 +65,13 @@ ignoreJustAdded (x@(_,(a,d)):xs)
 
 freq :: IO ()
 freq = do
-    (inp,out,err,pid) <- runInteractiveProcess "git" ["log"
-                                                     , "--numstat"
-                                                     , "--pretty=\"%0\""
-                                                     ] Nothing Nothing
-    changes <- walk out []
-    mapM_ render $ ignoreJustAdded . sortResult . Map.toList $ sumChanges changes
+    (_,out,_,_) <- runInteractiveProcess "git" ["log"
+                                               , "--numstat"
+                                               , "--pretty=\"%0\""
+                                               ] Nothing Nothing
+    freq' out >>= mapM_ render
+
+freq' :: Source a => a -> IO [Change]
+freq' source = do
+    changes <- walk source []
+    return $ ignoreJustAdded . sortResult . Map.toList $ sumChanges changes
