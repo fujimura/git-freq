@@ -22,6 +22,21 @@ Executable git-freq
                       , optparse-applicative
                       , process
 
+test-suite spec
+  Main-Is:              Spec.hs
+  Default-Language:     Haskell2010
+  GHC-Options:          -Wall
+  Hs-Source-Dirs:       src
+                      , test
+  Type:                 exitcode-stdio-1.0
+  Build-Depends:        base
+                      , bytestring
+                      , hspec
+                      , text
+                      , containers
+                      , optparse-applicative
+                      , process
+
 Source-Repository head
   Type:                 git
   Location:             git@github.com:fujimura/git-freq.git
