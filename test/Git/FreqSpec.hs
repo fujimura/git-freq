@@ -32,6 +32,9 @@ spec = do
         source <- createMockSource [ "1\t1\tgit-freq.cabal"
                                    , "2\t5\tREADME.md"
                                    , "3\t0\tgit-freq.cabal"
+                                   , "%0"
+                                   , "4\t3\t"
+                                   , "4\t\t3\tfoo"
                                    , "2\t9\tREADME.md"
                                    ]
         freq' source `shouldReturn` [ ("README.md", (4, 14))

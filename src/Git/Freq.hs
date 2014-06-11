@@ -22,6 +22,7 @@ type Result = Map FileName NumStat
 parseLine :: Text -> Maybe Change
 parseLine = go . T.splitOn (T.pack "\t")
     where go :: [Text] -> Maybe Change
+          go (_:_:"":_) = Nothing
           go (added:deleted:filename:_) =
             case (readIntMaybe added, readIntMaybe deleted) of
                 (Just a, Just d) -> Just (filename, (a, d))
