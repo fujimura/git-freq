@@ -1,4 +1,4 @@
-# git-freq [![Build Status](https://travis-ci.org/fujimura/git-freq.png?branch=master)](https://travis-ci.org/fujimura/git-freq)[![Coverage Status](https://coveralls.io/repos/fujimura/git-freq/badge.png)](https://coveralls.io/r/fujimura/git-freq)
+# git-freq [![Build Status](https://travis-ci.org/fujimura/git-freq.svg?branch=master)](https://travis-ci.org/fujimura/git-freq)[![Coverage Status](https://img.shields.io/coveralls/fujimura/git-freq.svg)](https://coveralls.io/r/fujimura/git-freq?branch=master)
 
 A Git subcommand to detect frequently changed code in the repository
 
