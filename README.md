@@ -1,6 +1,6 @@
 # git-freq [![Build Status](https://travis-ci.org/fujimura/git-freq.svg?branch=master)](https://travis-ci.org/fujimura/git-freq)[![Coverage Status](https://img.shields.io/coveralls/fujimura/git-freq.svg)](https://coveralls.io/r/fujimura/git-freq?branch=master)
 
-A Git subcommand to detect frequently changed code in the repository
+A Git subcommand to show total addition, deletion per file
 
 ## Installation
 
@@ -12,7 +12,9 @@ $ cabal install git-freq
 
 ## Usage
 
-Just hit `git freq` in the repository.
+Just hit `git freq` in the repository. Total addition, deletion per file will be shown as a csv in following format.
+
+`file name, addition, deletion`
 
 ## Example
 
