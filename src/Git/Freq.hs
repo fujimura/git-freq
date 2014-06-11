@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Git.Freq where
 
+import           Control.Arrow   ((***))
 import           Data.List       (sortBy)
 import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
@@ -44,10 +45,9 @@ sumChanges :: [Change] -> Result
 sumChanges = foldl incrementChange Map.empty
 
 incrementChange :: Result -> Change -> Result
-incrementChange result (fileName,numStat@(a,d)) =
-    case Map.lookup fileName result of
-        Just (a',d') -> Map.insert fileName (a+a', d+d') result
-        Nothing      -> Map.insert fileName numStat result
+incrementChange result (fileName,numstat@(a,d)) = Map.alter f fileName result
+  where
+    f numstat' = Just $ maybe numstat ((a+) *** (d+)) numstat'
 
 render :: Change -> IO ()
 render (fileName,(added,deleted)) =
