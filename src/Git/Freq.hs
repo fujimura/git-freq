@@ -56,14 +56,6 @@ render (fileName,(added,deleted)) =
 sortResult :: [Change] -> [Change]
 sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f
 
--- TODO: This ignores the file which had many changes but deleted.
-ignoreJustAdded :: [Change] -> [Change]
-ignoreJustAdded [] = []
-ignoreJustAdded (x@(_,(a,d)):xs)
-    | a == d    = ignoreJustAdded xs
-    | d == 0    = ignoreJustAdded xs
-    | otherwise = x:ignoreJustAdded xs
-
 freq :: IO ()
 freq = do
     (_,out,_,_) <- runInteractiveProcess "git" ["log"
@@ -75,4 +67,4 @@ freq = do
 freq' :: Source a => a -> IO [Change]
 freq' source = do
     changes <- walk source []
-    return $ ignoreJustAdded . sortResult . Map.toList $ sumChanges changes
+    return $ sortResult . Map.toList $ sumChanges changes
