@@ -20,20 +20,20 @@ See `git freq --help` for more options.
 
 ## Example
 
-[Ruby on Rails](https://github.com/rails/rails) at [a6c8cde835](https://github.com/rails/rails/commit/a6c8cde83526e4ec5b1212b5e6d1e512ebf7c0ec)
+[Lens](https://github.com/ekmett/lens) at [2587bb01](https://github.com/ekmett/lens/commit/2587bb01a1f63199130b15c9e65bf4557480318d)
 
 ```
 $ git freq | head
-activerecord/CHANGELOG.md,12867,12139
-activerecord/lib/active_record/base.rb,10778,10172
-actionpack/test/controller/routing_test.rb,10338,8400
-activerecord/lib/active_record/associations.rb,10213,8248
-actionpack/CHANGELOG.md,8840,8697
-railties/html/javascripts/prototype.js,8379,8280
-activerecord/CHANGELOG,7923,7921
-guides/source/active_support_core_extensions.md,9588,5710
-actionpack/CHANGELOG,6845,6838
-railties/guides/source/initialization.textile,6847,6582
+src/Control/Lens.hs,5365,5263
+src/Control/Lens/Fold.hs,5885,3471
+src/Control/Lens/Internal.hs,4205,4123
+src/Control/Lens/Type.hs,3493,2869
+src/Control/Lens/TH.hs,3530,2066
+src/Control/Lens/Setter.hs,3097,1846
+src/Control/Lens/Internal/Zipper.hs,2432,2436
+src/Control/Lens/Traversal.hs,2846,1628
+src/Control/Exception/Lens.hs,2646,1697
+src/Control/Lens/Plated.hs,2395,1715
 ```
 
 ## How to run tests
