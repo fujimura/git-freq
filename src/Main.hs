@@ -6,17 +6,21 @@ import           Options.Applicative
 
 
 data Config = Config
-  { version :: Bool }
+  { version :: Bool
+  , paths :: [FilePath]
+  }
 
 config :: Parser Config
 config = Config
   <$> switch
       (long "version" <> short 'v' <> help "Show version")
+  <*> many
+      (argument str (metavar "PATH..." <> help "Target paths"))
 main :: IO ()
 main = do
-    (Config showVersion) <- execParser opts
+    (Config showVersion paths) <- execParser opts
     if showVersion then putStrLn Version.version
-                   else freq
+                   else freq paths
   where
     opts = info (helper <*> config)
       ( fullDesc

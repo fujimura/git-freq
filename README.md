@@ -16,6 +16,8 @@ Just hit `git freq` in the repository. Total addition, deletion per file will be
 
 `file name, addition, deletion`
 
+See `git freq --help` for more options.
+
 ## Example
 
 [Ruby on Rails](https://github.com/rails/rails) at [a6c8cde835](https://github.com/rails/rails/commit/a6c8cde83526e4ec5b1212b5e6d1e512ebf7c0ec)

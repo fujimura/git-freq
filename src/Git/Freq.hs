@@ -56,12 +56,14 @@ render (fileName,(added,deleted)) =
 sortResult :: [Change] -> [Change]
 sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f
 
-freq :: IO ()
-freq = do
-    (_,out,_,_) <- runInteractiveProcess "git" ["log"
-                                               , "--numstat"
-                                               , "--pretty=\"%0\""
-                                               ] Nothing Nothing
+freq :: [FilePath] -> IO ()
+freq paths = do
+    let args = ["log"
+               , "--numstat"
+               , "--pretty=\"%0\""
+               ] ++ paths
+
+    (_,out,_,_) <- runInteractiveProcess "git" args Nothing Nothing
     freq' out >>= mapM_ render
 
 freq' :: Source a => a -> IO [Change]
