@@ -4,8 +4,6 @@ A Git subcommand to show total addition, deletion per file
 
 ## Installation
 
-Please note: not yet released. Just a future plan.
-
 ```
 $ cabal install git-freq
 ```
@@ -44,4 +42,8 @@ cabal configure --enable-tests && cabal build && cabal test
 
 ## Contributing
 
-TODO: Write contribution instructions here
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create new Pull Request
