@@ -21,6 +21,9 @@ Executable git-freq
                       , optparse-applicative
                       , process
                       , text
+  Other-modules:        Git.Freq
+                      , Git.Freq.Source
+                      , Git.Freq.Version
 
 test-suite spec
   Main-Is:              Spec.hs
