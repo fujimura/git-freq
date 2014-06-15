@@ -14,6 +14,7 @@ Executable git-freq
   Main-Is:              Main.hs
   Default-Language:     Haskell2010
   GHC-Options:          -Wall
+                        -fno-warn-name-shadowing
   Hs-Source-Dirs:       src
   Build-Depends:        base >= 4 && < 5
                       , bytestring
@@ -29,6 +30,7 @@ test-suite spec
   Main-Is:              Spec.hs
   Default-Language:     Haskell2010
   GHC-Options:          -Wall
+                        -fno-warn-name-shadowing
   Hs-Source-Dirs:       src
                       , test
   Type:                 exitcode-stdio-1.0
