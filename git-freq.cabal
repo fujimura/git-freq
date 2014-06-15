@@ -1,11 +1,11 @@
 Name:                   git-freq
-Version:                0.0.0
+Version:                0.0.1
 Author:                 Fujimura Daisuke<me@fujimuradaisuke.com>
 Maintainer:             Fujimura Daisuke<me@fujimuradaisuke.com>
 License:                BSD3
 License-File:           LICENSE
-Synopsis:               A Git subcommand to detect frequently changed code in the repository
-Description:            A Git subcommand to detect frequently changed code in the repository
+Synopsis:               A Git subcommand to show total addition, deletion per file
+Description:            A Git subcommand to show total addition, deletion per file
 Cabal-Version:          >= 1.10
 Homepage:               https://github.com/fujimura/git-freq
 Build-Type:             Simple
@@ -17,10 +17,10 @@ Executable git-freq
   Hs-Source-Dirs:       src
   Build-Depends:        base >= 4 && < 5
                       , bytestring
-                      , text
                       , containers
                       , optparse-applicative
                       , process
+                      , text
 
 test-suite spec
   Main-Is:              Spec.hs
@@ -31,11 +31,11 @@ test-suite spec
   Type:                 exitcode-stdio-1.0
   Build-Depends:        base
                       , bytestring
-                      , hspec
-                      , text
                       , containers
+                      , hspec
                       , optparse-applicative
                       , process
+                      , text
 
 Source-Repository head
   Type:                 git
