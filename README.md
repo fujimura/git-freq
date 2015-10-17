@@ -1,4 +1,5 @@
-# git-freq [![Build Status](https://travis-ci.org/fujimura/git-freq.svg?branch=master)](https://travis-ci.org/fujimura/git-freq)[![Coverage Status](https://img.shields.io/coveralls/fujimura/git-freq.svg)](https://coveralls.io/r/fujimura/git-freq?branch=master)
+
+# git-freq [![Circle CI](https://circleci.com/gh/fujimura/git-freq.svg?style=shield)](https://circleci.com/gh/fujimura/git-freq)[![Coverage Status](https://img.shields.io/coveralls/fujimura/git-freq.svg)](https://coveralls.io/r/fujimura/git-freq?branch=master)
 
 A Git subcommand to show total addition, deletion per file
 
