@@ -1,32 +1,26 @@
 module Main where
 
+import           Data.Version        (showVersion)
 import           Git.Freq
-import qualified Git.Freq.Version    as Version
 import           Options.Applicative
+import qualified Paths_git_freq      (version)
 
+filePaths :: Parser [FilePath]
+filePaths = many (argument str (metavar "PATH..." <> help "Target paths"))
 
-data Config = Config
-  { version :: Bool
-  , paths :: [FilePath]
-  }
-
-config :: Parser Config
-config = Config
-  <$> switch
-      (long "version" <> short 'v' <> help "Show version")
-  <*> many
-      (argument str (metavar "PATH..." <> help "Target paths"))
+version :: Parser (a -> a)
+version = infoOption (showVersion Paths_git_freq.version)
+  (  short 'v'
+  <> long "version"
+  <> help "Print version information" )
 
 main :: IO ()
-main = do
-    (Config showVersion paths) <- execParser opts
-    if showVersion then putStrLn Version.version
-                   else freq paths
+main = execParser opts >>= freq
   where
-    opts = info (helper <*> config)
+    opts = info (helper <*> version <*> filePaths)
       ( fullDesc
       <> progDesc (unlines [ "Total addition, deletion per file will be shown as a csv in following format:"
                             , "`file name, addition, deletion`"
                             ])
 
-     <> header "git-freq - Show frequently changed code in the repository")
+     <> header "git-freq - Show frequently changed code in a repository")

@@ -24,7 +24,6 @@ Executable git-freq
                       , process
                       , text
   Other-modules:        Git.Freq
-                      , Git.Freq.Version
 
 test-suite spec
   Main-Is:              Spec.hs
