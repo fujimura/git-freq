@@ -6,7 +6,7 @@ A Git subcommand to show total addition, deletion per file
 ## Installation
 
 ```
-$ cabal install git-freq
+$ stack install git-freq
 ```
 
 ## Usage
@@ -38,7 +38,7 @@ src/Control/Lens/Plated.hs,2395,1715
 ## How to run tests
 
 ```
-cabal configure --enable-tests && cabal build && cabal test
+$ stack test
 ```
 
 ## Contributing
