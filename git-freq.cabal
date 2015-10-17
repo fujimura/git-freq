@@ -19,11 +19,11 @@ Executable git-freq
   Build-Depends:        base >= 4 && < 5
                       , bytestring
                       , containers
+                      , io-streams
                       , optparse-applicative
                       , process
                       , text
   Other-modules:        Git.Freq
-                      , Git.Freq.Source
                       , Git.Freq.Version
 
 test-suite spec
@@ -37,6 +37,7 @@ test-suite spec
   Build-Depends:        base
                       , bytestring
                       , containers
+                      , io-streams
                       , hspec
                       , optparse-applicative
                       , process

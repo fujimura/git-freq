@@ -1,35 +1,24 @@
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE OverloadedStrings    #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
 module Git.FreqSpec ( spec ) where
 
-import           Control.Applicative
-import           Data.IORef
-import qualified Data.Text           as T
-import           Git.Freq
-import           Git.Freq.Source
+import           Data.ByteString       (ByteString)
+import qualified Data.ByteString.Char8 as BS
+import qualified Data.Map.Strict       as Map
+import           System.IO.Streams     (InputStream)
+import qualified System.IO.Streams     as Streams
 import           Test.Hspec
 
-type MockSource = IORef [String]
+import           Git.Freq
 
-instance Source MockSource where
-    isEOF s = null <$> readIORef s
-    getLine s = readIORef s >>= go
-      where
-        go [] = error "Empty"
-        go (x:xs) = do
-          writeIORef s xs
-          return $ T.pack x
-
-createMockSource :: [String] -> IO MockSource
-createMockSource = newIORef
+createMockStream :: [String] -> IO (InputStream ByteString)
+createMockStream = Streams.fromByteString . BS.pack . unlines
 
 spec :: Spec
 spec = do
     describe "freq'" $ do
       it "should summarize changes" $ do
-        source <- createMockSource [ "100\t0\tgit-freq.cabal"
+        source <- createMockStream [ "100\t0\tgit-freq.cabal"
                                    , "20\t10\tgit-freq.cabal"
                                    , "0\t120\tgit-freq.cabal"
                                    , "2\t5\tREADME.md"
@@ -38,6 +27,6 @@ spec = do
                                    , "4\t\t3\tfoo"
                                    , "2\t9\tREADME.md"
                                    ]
-        freq' source `shouldReturn` [ ("git-freq.cabal", (120, 130))
-                                    , ("README.md", (4, 14))
-                                    ]
+        freq' source `shouldReturn` Map.fromList [ ("git-freq.cabal", (120, 130))
+                                                 , ("README.md", (4, 14))
+                                                 ]
