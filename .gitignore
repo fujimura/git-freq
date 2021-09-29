@@ -3,3 +3,4 @@
 *.chi
 *.chs.h
 dist-newstyle
+hie.yaml
