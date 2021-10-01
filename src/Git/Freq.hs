@@ -29,7 +29,7 @@ getNumStatStream :: [FilePath] -> IO (InputStream ByteString)
 getNumStatStream paths = do
   let args = ["log"
              , "--numstat"
-             , "--pretty=\"%0\""
+             , "--pretty="
              ] ++ paths
 
   (_,is,_,_) <- Streams.runInteractiveProcess "git" args Nothing Nothing
