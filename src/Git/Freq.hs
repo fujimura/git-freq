@@ -41,9 +41,6 @@ freq' is = Streams.lines is >>=
            Streams.mapMaybe id >>=
            Streams.fold incrementChange Map.empty
 
-sumChanges :: [Change] -> Result
-sumChanges = foldl incrementChange Map.empty
-
 incrementChange :: Result -> Change -> Result
 incrementChange result (fileName,numstat@(a,d)) = Map.alter f fileName result
   where
