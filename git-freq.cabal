@@ -38,6 +38,7 @@ executable git-freq
   other-modules:
     Git.Freq
     Git.NumStat
+    Types
     Paths_git_freq
 
 test-suite spec

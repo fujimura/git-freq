@@ -1,12 +1,10 @@
 module Git.NumStat (numstat) where
 
 import           Control.Applicative
-import           Data.Text (Text)
 import qualified Data.Text            as T
 import           Text.Trifecta         hiding (spaces)
 
-type FileName = Text
-type NumStat = (FileName, Int, Int, Maybe FileName)
+import Types
 
 numstat :: Parser NumStat
 numstat = do

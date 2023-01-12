@@ -4,7 +4,6 @@ module Git.Freq where
 import           Control.Arrow      ((***))
 import           Data.ByteString    (ByteString)
 import           Data.List          (sortBy)
-import           Data.Map.Strict    (Map)
 import qualified Data.Map.Strict    as Map
 import           Data.Text          (Text)
 import qualified Data.Text          as T
@@ -15,10 +14,7 @@ import           Text.Read          (readMaybe)
 import           System.IO.Streams  (InputStream)
 import qualified System.IO.Streams  as Streams
 
-type FileName = Text
-type NumStat = (Int, Int)
-type Change = (FileName, NumStat)
-type Result = Map FileName NumStat
+import Types
 
 freq :: [FilePath] -> IO ()
 freq paths = do
