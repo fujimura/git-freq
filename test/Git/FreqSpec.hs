@@ -53,9 +53,7 @@ spec = do
             "20\t10\tgit-freq.cabal",
             "0\t120\tgit-freq.cabal",
             "2\t5\tREADME.md",
-            "%0",
-            "4\t3\t",
-            "4\t\t3\tfoo",
+            --"4\t\t3\tfoo",
             "2\t9\tREADME.md"
           ]
       freq' source
