@@ -9,12 +9,15 @@ import           Data.Text          (Text)
 import qualified Data.Text          as T
 import qualified Data.Text.Encoding as T
 import qualified Data.Text.IO       as T
+import qualified Text.Trifecta.Parser as Parser
+import qualified Text.Trifecta.Result as Parser
 import           Text.Read          (readMaybe)
 
 import           System.IO.Streams  (InputStream)
 import qualified System.IO.Streams  as Streams
 
 import Types
+import Git.NumStat(numstat)
 
 freq :: [FilePath] -> IO ()
 freq paths = do
@@ -33,28 +36,22 @@ getNumStatStream paths = do
 
 freq' :: InputStream ByteString -> IO Result
 freq' is = Streams.lines is >>=
-           Streams.map (parseLine . T.decodeUtf8) >>=
+           Streams.map parse >>=
            Streams.mapMaybe id >>=
            Streams.fold incrementChange Map.empty
-
-incrementChange :: Result -> Change -> Result
-incrementChange result (fileName,numstat@(a,d)) = Map.alter f fileName result
   where
-    f numstat' = Just $ maybe numstat ((a+) *** (d+)) numstat'
+    parse :: ByteString -> Maybe NumStat
+    parse bs = case Parser.parseByteString numstat mempty bs of
+      Parser.Success n -> Just n
+      Parser.Failure doc -> error $ show doc
+
+incrementChange :: Result -> NumStat -> Result
+incrementChange result (fileName,a,d,_) = Map.alter f fileName result
+  where
+    f numstat' = Just $ maybe (a,d) ((a+) *** (d+)) numstat'
 
 sortResult :: [Change] -> [Change]
 sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f
-
-parseLine :: Text -> Maybe Change
-parseLine = go . T.splitOn (T.pack "\t")
-    where go :: [Text] -> Maybe Change
-          go (_:_:"":_) = Nothing
-          go (added:deleted:filename:_) =
-            case (readIntMaybe added, readIntMaybe deleted) of
-                (Just a, Just d) -> Just (filename, (a, d))
-                _                -> Nothing
-          go _ = Nothing
-          readIntMaybe x = readMaybe (T.unpack x) :: Maybe Int
 
 render :: Change -> IO ()
 render (fileName,(added,deleted)) =
