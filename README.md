@@ -1,5 +1,5 @@
 
-# git-freq [![Circle CI](https://circleci.com/gh/fujimura/git-freq.svg?style=shield)](https://circleci.com/gh/fujimura/git-freq)[![Coverage Status](https://img.shields.io/coveralls/fujimura/git-freq.svg)](https://coveralls.io/r/fujimura/git-freq?branch=master)
+# git-freq ![ci](https://github.com/fujimura/git-freq/actions/workflows/ci.yaml/badge.svg)
 
 A Git subcommand to show total addition, deletion per file
 
@@ -38,7 +38,7 @@ src/Control/Lens/Plated.hs,2395,1715
 ## How to run tests
 
 ```
-$ stack test
+$ cabal test
 ```
 
 ## Contributing
