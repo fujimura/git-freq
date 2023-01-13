@@ -5,6 +5,7 @@ import           Control.Arrow      ((***))
 import           Data.ByteString    (ByteString)
 import           Data.List          (sortBy)
 import qualified Data.Map.Strict    as Map
+import           Data.Map.Strict    (Map)
 import qualified Data.Text          as T
 import qualified Data.Text.IO       as T
 import qualified Text.Trifecta.Parser as Parser
@@ -26,6 +27,7 @@ getNumStatStream paths = do
   let args = ["log"
              , "--numstat"
              , "--pretty="
+             , "--reverse"
              ] ++ paths
 
   (_,is,_,_) <- Streams.runInteractiveProcess "git" args Nothing Nothing
@@ -35,17 +37,26 @@ freq' :: InputStream ByteString -> IO Result
 freq' is = Streams.lines is >>=
            Streams.map parse >>=
            Streams.mapMaybe id >>=
-           Streams.fold incrementChange Map.empty
+           Streams.fold update Map.empty
   where
     parse :: ByteString -> Maybe NumStat
     parse bs = case Parser.parseByteString numstat mempty bs of
       Parser.Success n -> Just n
       Parser.Failure doc -> error $ show doc
 
-incrementChange :: Result -> NumStat -> Result
-incrementChange result (fileName,a,d,_) = Map.alter f fileName result
+update :: Result -> NumStat -> Result
+update result (fileName,a,d,o) = go result (fileName, a,d,o)
   where
-    f numstat' = Just $ maybe (a,d) ((a+) *** (d+)) numstat'
+    go :: Result -> NumStat -> Result
+    go result (new,a,d,Just old)      = swap old new $ Map.alter incr old result
+    go result (fileName,a,d, Nothing) = Map.alter incr fileName result
+    incr :: Maybe (Int, Int) -> Maybe (Int, Int)
+    incr numstat' = Just $ maybe (a,d) ((a+) *** (d+)) numstat'
+
+swap :: Ord k => k -> k -> Map k a -> Map k a
+swap old new m = case Map.lookup old m of
+  Just v -> (Map.insert new v . Map.delete old) m
+  Nothing -> m
 
 sortResult :: [Change] -> [Change]
 sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f

@@ -14,6 +14,7 @@ import           System.IO               (stdout)
 import           System.IO.Silently      (capture, hSilence)
 import           System.IO.Streams       (InputStream)
 import qualified System.IO.Streams       as Streams
+import           System.Process          (system)
 
 import           Test.Hspec
 
@@ -27,6 +28,7 @@ spec :: Spec
 spec = do
   describe "freq" $ do
     around_ (hSilence [stdout] . inTempRepo) $ do
+
       it "should summarize changes" $ do
         commitFile "foo.hs" [i|
                             putStrLn "Foo"
@@ -41,9 +43,13 @@ spec = do
                             putStrLn "Bar"
                             |]
 
+        system "git mv foo.hs bar.hs"
+        system "git commit -a -m 'moved'"
+        system "git log --numstat"
+
         let run paths = fst <$> capture (freq paths `catch` (\ExitSuccess -> return ()))
 
-        run ["."] `shouldReturn` unlines ["foo.hs,2,1"]
+        run ["."] `shouldReturn` unlines ["bar.hs,2,1"]
 
   describe "freq'" $ do
     it "should summarize changes" $ do
