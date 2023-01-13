@@ -24,10 +24,12 @@ spec :: Spec
 spec = describe "numstat" $ do
   it "should parse" $ do
     parse numstat "0\t0\tfoo"
-      `shouldBe` ("foo", 0, 0, Nothing)
+      `shouldBe` Just ("foo", 0, 0, Nothing)
     parse numstat "10\t20\tfoo/{Git => src/Git}"
-      `shouldBe` ("foo/src/Git", 10, 20, Just "foo/Git")
+      `shouldBe` Just ("foo/src/Git", 10, 20, Just "foo/Git")
     parse numstat "0\t0\t.foo => .bar"
-      `shouldBe` (".bar", 0, 0, Just ".foo")
+      `shouldBe` Just (".bar", 0, 0, Just ".foo")
     parse numstat "1\t\t0\t\ta"
-      `shouldBe` ("a", 1, 0, Nothing)
+      `shouldBe` Just ("a", 1, 0, Nothing)
+    parse numstat "-\t\t-\t\tbinary.png"
+      `shouldBe` Nothing

@@ -3,21 +3,26 @@ module Git.NumStat (numstat) where
 import           Control.Applicative
 import qualified Data.Text            as T
 import           Text.Trifecta         hiding (spaces)
+import Text.Parser.LookAhead (LookAheadParsing(lookAhead))
 
 import Types
 
-numstat :: Parser NumStat
+numstat :: Parser (Maybe NumStat)
 numstat = do
-  added <- read <$> manyTill digit tab
-  skipMany tab
-  deleted <- read <$> manyTill digit tab
-  skipMany tab
-  fm <- optional (try filemoveWithBrace <|> try filemove)
-  case fm of
-    Just (old, current) -> return (T.pack current, added,deleted, Just $ T.pack old)
+  hyphen <- lookAhead $ optional (char '-')
+  case hyphen of
+    Just _ -> return Nothing
     Nothing -> do
-      current <- manyTill anyChar eof
-      return (T.pack current, added,deleted,  Nothing)
+      added <- read <$> manyTill digit tab
+      skipMany tab
+      deleted <- read <$> manyTill digit tab
+      skipMany tab
+      fm <- optional (try filemoveWithBrace <|> try filemove)
+      case fm of
+        Just (old, current) -> return $ Just (T.pack current, added,deleted, Just $ T.pack old)
+        Nothing -> do
+          current <- manyTill anyChar eof
+          return $ Just (T.pack current, added,deleted,  Nothing)
 
 filemoveWithBrace :: Parser (String, String)
 filemoveWithBrace = do

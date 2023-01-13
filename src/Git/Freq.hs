@@ -41,7 +41,7 @@ freq' is = Streams.lines is >>=
   where
     parse :: ByteString -> Maybe NumStat
     parse bs = case Parser.parseByteString numstat mempty bs of
-      Parser.Success n -> Just n
+      Parser.Success n -> n
       Parser.Failure doc -> error $ show doc
 
 update :: Result -> NumStat -> Result
