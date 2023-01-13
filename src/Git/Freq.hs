@@ -5,13 +5,10 @@ import           Control.Arrow      ((***))
 import           Data.ByteString    (ByteString)
 import           Data.List          (sortBy)
 import qualified Data.Map.Strict    as Map
-import           Data.Text          (Text)
 import qualified Data.Text          as T
-import qualified Data.Text.Encoding as T
 import qualified Data.Text.IO       as T
 import qualified Text.Trifecta.Parser as Parser
 import qualified Text.Trifecta.Result as Parser
-import           Text.Read          (readMaybe)
 
 import           System.IO.Streams  (InputStream)
 import qualified System.IO.Streams  as Streams

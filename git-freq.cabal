@@ -59,6 +59,8 @@ test-suite spec
   other-modules:
     Git.Freq
     Git.NumStat
+    Types
     Git.FreqSpec
+    Git.NumStatSpec
     Helper
     Paths_git_freq
