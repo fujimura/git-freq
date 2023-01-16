@@ -50,7 +50,7 @@ update result (fileName,a,d,o) = go result (fileName, a,d,o)
     go :: Result -> NumStat -> Result
     go result (new,a,d,Just old)      = swap old new $ Map.alter incr old result
     go result (fileName,a,d, Nothing) = Map.alter incr fileName result
-    incr :: Maybe (Int, Int) -> Maybe (Int, Int)
+    incr :: Maybe Delta -> Maybe Delta
     incr numstat' = Just $ maybe (a,d) ((a+) *** (d+)) numstat'
 
 swap :: Ord k => k -> k -> Map k a -> Map k a
