@@ -1,7 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedRecordDot #-}
+{-# LANGUAGE FlexibleContexts #-}
+
 module Git.Freq where
 
-import           Control.Arrow      ((***))
 import           Data.ByteString    (ByteString)
 import           Data.List          (sortBy)
 import qualified Data.Map.Strict    as Map
@@ -51,7 +53,8 @@ update result (fileName,a,d,o) = go result (fileName, a,d,o)
     go result (new,a,d,Just old)      = swap old new $ Map.alter incr old result
     go result (fileName,a,d, Nothing) = Map.alter incr fileName result
     incr :: Maybe Delta -> Maybe Delta
-    incr numstat' = Just $ maybe (a,d) ((a+) *** (d+)) numstat'
+    incr Nothing = Just $ Delta {added = a , deleted = d}
+    incr (Just delta) = Just $ Delta {added = delta.added + a, deleted = delta.deleted + d}
 
 swap :: Ord k => k -> k -> Map k a -> Map k a
 swap old new m = case Map.lookup old m of
@@ -59,8 +62,8 @@ swap old new m = case Map.lookup old m of
   Nothing -> m
 
 sortResult :: [Change] -> [Change]
-sortResult = let f (_,(xa,xd)) (_,(ya,yd)) = (ya+yd) `compare` (xa+xd) in sortBy f
+sortResult = let f (_,d1) (_,d2) = (d2.added+d2.deleted) `compare` (d1.added+d1.deleted) in sortBy f
 
 render :: Change -> IO ()
-render (fileName,(added,deleted)) =
-    T.putStrLn . T.pack . mconcat $ [T.unpack fileName, ",",  show added, ",", show deleted]
+render (fileName,delta) =
+    T.putStrLn . T.pack . mconcat $ [T.unpack fileName, ",",  show delta.added, ",", show delta.deleted]

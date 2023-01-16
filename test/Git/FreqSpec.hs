@@ -19,6 +19,7 @@ import           System.Process          (system)
 import           Test.Hspec
 
 import           Git.Freq                (freq, freq')
+import           Types
 import           Helper                  (commitFile, inTempRepo)
 
 createMockStream :: [String] -> IO (InputStream ByteString)
@@ -64,6 +65,6 @@ spec = do
           ]
       freq' source
         `shouldReturn` Map.fromList
-          [ ("git-freq.cabal", (120, 130)),
-            ("README.md", (4, 14))
+          [ ("git-freq.cabal", Delta {added =120, deleted =130}),
+            ("README.md", Delta {added = 4, deleted =14})
           ]

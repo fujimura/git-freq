@@ -5,6 +5,9 @@ import Data.Map.Strict (Map)
 
 type FileName = Text
 type NumStat = (FileName, Int, Int, Maybe FileName)
-type Delta = (Int, Int)
+data Delta = Delta
+  { added::Int
+  , deleted:: Int
+  } deriving (Show, Eq, Ord)
 type Change = (FileName, Delta)
 type Result = Map FileName Delta
