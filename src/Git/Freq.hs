@@ -51,8 +51,7 @@ update result (fileName,delta,Just oldFileName) = swap oldFileName fileName $ Ma
 update result (fileName,delta,Nothing)          = Map.alter (incr delta) fileName result
 
 incr :: Delta -> Maybe Delta -> Maybe Delta
-incr d Nothing      = Just d
-incr d (Just delta) = Just $ delta <> d
+incr d = maybe (Just d) (\x -> Just (x <> d))
 
 swap :: Ord k => k -> k -> Map k a -> Map k a
 swap old new m = case Map.lookup old m of
