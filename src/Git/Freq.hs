@@ -40,11 +40,11 @@ freq' is = Streams.lines is >>=
            Streams.map parse >>=
            Streams.mapMaybe id >>=
            Streams.fold update Map.empty
-  where
-    parse :: ByteString -> Maybe NumStat
-    parse bs = case Parser.parseByteString numstat mempty bs of
-      Parser.Success n -> n
-      Parser.Failure doc -> error $ show doc
+
+parse :: ByteString -> Maybe NumStat
+parse bs = case Parser.parseByteString numstat mempty bs of
+  Parser.Success n -> n
+  Parser.Failure doc -> error $ show doc
 
 update :: Result -> NumStat -> Result
 update result (fileName,delta,Just oldFileName) = swap oldFileName fileName $ Map.alter (incr delta) oldFileName result
