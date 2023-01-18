@@ -11,6 +11,7 @@ import           Test.Hspec
 import           Text.Trifecta.Parser (Parser)
 import qualified Text.Trifecta.Parser as Parser
 import           Text.Trifecta.Result (Result (Failure, Success))
+import           Types
 
 parse :: Parser a -> Text -> a
 parse p t = case Parser.parseString p mempty (T.unpack t) of
@@ -24,12 +25,12 @@ spec :: Spec
 spec = describe "numstat" $ do
   it "should parse" $ do
     parse numstat "0\t0\tfoo"
-      `shouldBe` Just ("foo", 0, 0, Nothing)
+      `shouldBe` Just ("foo", Delta { added = 0, deleted = 0} , Nothing)
     parse numstat "10\t20\tfoo/{Git => src/Git}"
-      `shouldBe` Just ("foo/src/Git", 10, 20, Just "foo/Git")
+      `shouldBe` Just ("foo/src/Git", Delta { added = 10, deleted = 20 }, Just "foo/Git")
     parse numstat "0\t0\t.foo => .bar"
-      `shouldBe` Just (".bar", 0, 0, Just ".foo")
+      `shouldBe` Just (".bar", Delta { added = 0, deleted = 0 }, Just ".foo")
     parse numstat "1\t\t0\t\ta"
-      `shouldBe` Just ("a", 1, 0, Nothing)
+      `shouldBe` Just ("a", Delta { added = 1, deleted = 0 }, Nothing)
     parse numstat "-\t\t-\t\tbinary.png"
       `shouldBe` Nothing

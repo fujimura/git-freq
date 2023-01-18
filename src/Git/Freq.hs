@@ -47,14 +47,12 @@ freq' is = Streams.lines is >>=
       Parser.Failure doc -> error $ show doc
 
 update :: Result -> NumStat -> Result
-update result (fileName,a,d,o) = go result (fileName, a,d,o)
-  where
-    go :: Result -> NumStat -> Result
-    go result (new,a,d,Just old)      = swap old new $ Map.alter incr old result
-    go result (fileName,a,d, Nothing) = Map.alter incr fileName result
-    incr :: Maybe Delta -> Maybe Delta
-    incr Nothing = Just $ Delta {added = a , deleted = d}
-    incr (Just delta) = Just $ delta <> Delta {added = a, deleted = d}
+update result (fileName,delta,Just oldFileName) = swap oldFileName fileName $ Map.alter (incr delta) oldFileName result
+update result (fileName,delta,Nothing)          = Map.alter (incr delta) fileName result
+
+incr :: Delta -> Maybe Delta -> Maybe Delta
+incr d Nothing      = Just d
+incr d (Just delta) = Just $ delta <> d
 
 swap :: Ord k => k -> k -> Map k a -> Map k a
 swap old new m = case Map.lookup old m of

@@ -6,7 +6,6 @@ import Data.Text (Text)
 import Data.Map.Strict (Map)
 
 type FileName = Text
-type NumStat = (FileName, Int, Int, Maybe FileName)
 data Delta = Delta
   { added::Int
   , deleted:: Int
@@ -18,5 +17,6 @@ instance Semigroup Delta where
 instance Monoid Delta where
   mempty        = Delta { added = 0, deleted = 0 }
 
+type NumStat = (FileName, Delta, Maybe FileName)
 type Change = (FileName, Delta)
 type Result = Map FileName Delta
