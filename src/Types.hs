@@ -21,5 +21,4 @@ instance Ord Delta where
   x `compare` y = (x.added + x.deleted) `compare` (y.added + y.deleted)
 
 type NumStat = (FileName, Delta, Maybe FileName)
-type Change = (FileName, Delta)
 type Result = Map FileName Delta

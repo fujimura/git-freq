@@ -58,9 +58,9 @@ swap old new m = case Map.lookup old m of
   Just v -> (Map.insert new v . Map.delete old) m
   Nothing -> m
 
-sortResult :: [Change] -> [Change]
+sortResult :: [(FileName, Delta)] -> [(FileName, Delta)]
 sortResult = let f x y = snd x `compare` snd y in sortBy f
 
-render :: Change -> IO ()
+render :: (FileName, Delta) -> IO ()
 render (fileName,delta) =
     T.putStrLn . T.pack . mconcat $ [T.unpack fileName, ",",  show delta.added, ",", show delta.deleted]
