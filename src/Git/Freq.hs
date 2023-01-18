@@ -54,7 +54,7 @@ update result (fileName,a,d,o) = go result (fileName, a,d,o)
     go result (fileName,a,d, Nothing) = Map.alter incr fileName result
     incr :: Maybe Delta -> Maybe Delta
     incr Nothing = Just $ Delta {added = a , deleted = d}
-    incr (Just delta) = Just $ Delta {added = delta.added + a, deleted = delta.deleted + d}
+    incr (Just delta) = Just $ delta <> Delta {added = a, deleted = d}
 
 swap :: Ord k => k -> k -> Map k a -> Map k a
 swap old new m = case Map.lookup old m of
