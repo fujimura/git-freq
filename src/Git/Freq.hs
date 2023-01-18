@@ -60,7 +60,7 @@ swap old new m = case Map.lookup old m of
   Nothing -> m
 
 sortResult :: [Change] -> [Change]
-sortResult = let f (_,d1) (_,d2) = (d2.added+d2.deleted) `compare` (d1.added+d1.deleted) in sortBy f
+sortResult = let f x y = snd x `compare` snd y in sortBy f
 
 render :: Change -> IO ()
 render (fileName,delta) =
