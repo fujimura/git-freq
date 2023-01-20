@@ -65,6 +65,6 @@ spec = do
           ]
       freq' source
         `shouldReturn` Map.fromList
-          [ ("git-freq.cabal", Delta {added =120, deleted =130}),
-            ("README.md", Delta {added = 4, deleted =14})
+          [ ("git-freq.cabal", Changes { delta = Delta {added =120, deleted =130} }),
+            ("README.md", Changes { delta = Delta {added = 4, deleted =14 } })
           ]

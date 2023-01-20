@@ -21,4 +21,14 @@ instance Ord Delta where
   x `compare` y = (x.added + x.deleted) `compare` (y.added + y.deleted)
 
 type NumStat = (FileName, Delta, Maybe FileName)
-type Result = Map FileName Delta
+
+data Changes = Changes
+  { delta :: Delta } deriving (Show, Eq)
+
+instance Semigroup Changes where
+  x <> y = Changes { delta = x.delta <> y.delta }
+
+instance Monoid Changes where
+  mempty = Changes { delta = Delta { added = 0, deleted = 0 } }
+
+type Result = Map FileName Changes
