@@ -47,8 +47,8 @@ parse bs = case Parser.parseByteString numstat mempty bs of
   Parser.Failure doc -> error $ show doc
 
 update :: Result -> NumStat -> Result
-update result (fileName,delta,Just oldFileName) = swap oldFileName fileName $ Map.alter (incr Changes { delta = delta }) oldFileName result
-update result (fileName,delta,Nothing)          = Map.alter (incr Changes { delta = delta }) fileName result
+update result (fileName,delta,Just oldFileName) = swap oldFileName fileName $ Map.alter (incr Changes { delta = delta, commits = 1 }) oldFileName result
+update result (fileName,delta,Nothing)          = Map.alter (incr Changes { delta = delta, commits = 1 }) fileName result
 
 incr :: Changes -> Maybe Changes -> Maybe Changes
 incr d = maybe (Just d) (\x -> Just (x <> d))
@@ -62,5 +62,5 @@ sortResult :: [(FileName, Changes)] -> [(FileName, Changes)]
 sortResult = let f (_,x) (_,y) = x.delta `compare` y.delta in sortBy f
 
 render :: (FileName, Changes) -> IO ()
-render (fileName,Changes { delta = delta }) =
-    T.putStrLn . T.pack . mconcat $ [T.unpack fileName, ",",  show delta.added, ",", show delta.deleted]
+render (fileName,Changes { delta = delta, commits = commits }) =
+    T.putStrLn . T.pack . mconcat $ [T.unpack fileName, ",",  show delta.added, ",", show delta.deleted, ",", show commits]

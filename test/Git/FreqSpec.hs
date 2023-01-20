@@ -50,7 +50,7 @@ spec = do
 
         let run paths = fst <$> capture (freq paths `catch` (\ExitSuccess -> return ()))
 
-        run ["."] `shouldReturn` unlines ["bar.hs,2,1"]
+        run ["."] `shouldReturn` unlines ["bar.hs,2,1,4"]
 
   describe "freq'" $ do
     it "should summarize changes" $ do
@@ -65,6 +65,6 @@ spec = do
           ]
       freq' source
         `shouldReturn` Map.fromList
-          [ ("git-freq.cabal", Changes { delta = Delta {added =120, deleted =130} }),
-            ("README.md", Changes { delta = Delta {added = 4, deleted =14 } })
+          [ ("git-freq.cabal", Changes { delta = Delta {added =120, deleted =130}, commits = 3 }),
+            ("README.md", Changes { delta = Delta {added = 4, deleted =14 }, commits = 2 })
           ]

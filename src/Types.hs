@@ -23,12 +23,14 @@ instance Ord Delta where
 type NumStat = (FileName, Delta, Maybe FileName)
 
 data Changes = Changes
-  { delta :: Delta } deriving (Show, Eq)
+  { delta :: Delta
+  , commits :: Int
+  } deriving (Show, Eq)
 
 instance Semigroup Changes where
-  x <> y = Changes { delta = x.delta <> y.delta }
+  x <> y = Changes { delta = x.delta <> y.delta, commits = x.commits + y.commits }
 
 instance Monoid Changes where
-  mempty = Changes { delta = Delta { added = 0, deleted = 0 } }
+  mempty = Changes { delta = Delta { added = 0, deleted = 0 }, commits = 0 }
 
 type Result = Map FileName Changes
