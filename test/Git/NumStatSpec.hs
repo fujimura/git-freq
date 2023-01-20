@@ -27,9 +27,9 @@ spec = describe "numstat" $ do
     parse numstat "0\t0\tfoo"
       `shouldBe` Just ("foo", Delta { added = 0, deleted = 0} , Nothing)
     parse numstat "10\t20\tfoo/{Git => src/Git}"
-      `shouldBe` Just ("foo/src/Git", Delta { added = 10, deleted = 20 }, Just "foo/Git")
+      `shouldBe` Just ("foo/Git", Delta { added = 10, deleted = 20 }, Just "foo/src/Git")
     parse numstat "0\t0\t.foo => .bar"
-      `shouldBe` Just (".bar", Delta { added = 0, deleted = 0 }, Just ".foo")
+      `shouldBe` Just (".foo", Delta { added = 0, deleted = 0 }, Just ".bar")
     parse numstat "1\t\t0\t\ta"
       `shouldBe` Just ("a", Delta { added = 1, deleted = 0 }, Nothing)
     parse numstat "-\t\t-\t\tbinary.png"

@@ -19,7 +19,7 @@ numstat = do
       skipMany tab
       fm <- optional (try filemoveWithBrace <|> try filemove)
       case fm of
-        Just (old, current) -> return $ Just (T.pack current, Delta { added = added, deleted = deleted } , Just $ T.pack old)
+        Just (old, current) -> return $ Just (T.pack old, Delta { added = added, deleted = deleted } , Just $ T.pack current)
         Nothing -> do
           current <- manyTill anyChar eof
           return $ Just (T.pack current, Delta { added = added, deleted = deleted },  Nothing)
