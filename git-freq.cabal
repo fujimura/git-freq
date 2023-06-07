@@ -27,7 +27,6 @@ common dependencies
     , optparse-applicative
     , process
     , text
-    , language-bash
     , parsers
     , trifecta
 
