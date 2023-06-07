@@ -4,7 +4,6 @@
 
 module Helper where
 
-import           Data.String.Interpolate
 import           Data.String.Interpolate.Util (unindent)
 import           System.Directory             (createDirectoryIfMissing)
 import           System.FilePath              (takeDirectory)
