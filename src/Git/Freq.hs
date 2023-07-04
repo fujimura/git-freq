@@ -47,10 +47,10 @@ parse bs = case Parser.parseByteString numstat mempty bs of
   Parser.Failure doc -> error $ show doc
 
 update :: Result -> NumStat -> Result
-update result (fileName,delta,newFileName) =
+update result (fileName,delta,mNewFileName) =
   let result' = Map.alter (incr Changes { delta = delta, commits = 1 }) fileName result in
-  case newFileName of
-    Just f' -> swap fileName f' result'
+  case mNewFileName of
+    Just newFileName -> swap fileName newFileName result'
     Nothing -> result'
 
 incr :: Changes -> Maybe Changes -> Maybe Changes
