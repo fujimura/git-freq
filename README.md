@@ -1,12 +1,11 @@
-
 # git-freq ![ci](https://github.com/fujimura/git-freq/actions/workflows/ci.yaml/badge.svg)
 
-A Git subcommand to show total addition, deletion per file
+A Git subcommand to show total addition, deletion, count of changes per file
 
 ## Installation
 
 ```
-$ stack install git-freq
+$ cabal install git-freq
 ```
 
 ## Usage
@@ -19,20 +18,20 @@ See `git freq --help` for more options.
 
 ## Example
 
-[Lens](https://github.com/ekmett/lens) at [2587bb01](https://github.com/ekmett/lens/commit/2587bb01a1f63199130b15c9e65bf4557480318d)
+[Lens](https://github.com/ekmett/lens) at [2587bb01](https://github.com/ekmett/lens/commit/60f773bdb8538d9023983e020b5cf7d0e1687df9)
 
 ```
-$ git freq | head
-src/Control/Lens.hs,5365,5263
-src/Control/Lens/Fold.hs,5885,3471
-src/Control/Lens/Internal.hs,4205,4123
-src/Control/Lens/Type.hs,3493,2869
-src/Control/Lens/TH.hs,3530,2066
-src/Control/Lens/Setter.hs,3097,1846
-src/Control/Lens/Internal/Zipper.hs,2432,2436
-src/Control/Lens/Traversal.hs,2846,1628
-src/Control/Exception/Lens.hs,2646,1697
-src/Control/Lens/Plated.hs,2395,1715
+$ git freq | tail
+src/Control/Lens/Internal/Zipper.hs,1995,2003,108
+src/Control/Lens/Setter.hs,3295,1929,148
+src/Control/Lens/Traversal.hs,3430,1962,295
+src/Control/Exception/Lens.hs,3498,2021,93
+src/Language/Haskell/TH/Lens.hs,4566,1729,75
+src/Control/Lens/Lens.hs,4183,2683,218
+src/Control/Lens/TH.hs,4274,3386,236
+src/Control/Lens/Internal.hs,4205,4130,195
+src/Control/Lens/Fold.hs,6552,3766,281
+src/Control/Lens.hs,5395,5297,195
 ```
 
 ## How to run tests
