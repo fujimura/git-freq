@@ -27,6 +27,8 @@ common dependencies
     , optparse-applicative
     , process
     , text
+    , parsers
+    , trifecta
 
 executable git-freq
   import:         dependencies, default
@@ -34,16 +36,30 @@ executable git-freq
   hs-source-dirs: src
   other-modules:
     Git.Freq
+    Git.NumStat
+    Types
     Paths_git_freq
 
 test-suite spec
   import:             dependencies, default
   type:               exitcode-stdio-1.0
   main-is:            Spec.hs
-  build-depends:      hspec
+  build-depends:
+    , directory
+    , filepath
+    , hspec
+    , interpolate
+    , mockery
+    , silently
+    , temporary
+
   build-tool-depends: hspec-discover:hspec-discover -any
   hs-source-dirs:     src test
   other-modules:
     Git.Freq
+    Git.NumStat
+    Types
     Git.FreqSpec
+    Git.NumStatSpec
+    Helper
     Paths_git_freq
