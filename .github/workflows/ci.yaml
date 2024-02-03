@@ -19,6 +19,10 @@ jobs:
           git config --global user.email "john@example.com"
           git config --global user.name "John Doe"
           cabal test --test-show-details=direct
+  lint:
+    name: Check format on GHC ${{ matrix.ghc }}
+    steps:
+      - uses: haskell-actions/run-ormolu@v14
   build:
     name: Build on GHC ${{ matrix.ghc }}
     runs-on: ubuntu-latest
